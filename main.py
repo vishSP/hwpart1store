@@ -1,5 +1,6 @@
 import csv
 
+
 class Item:
     """размер скидки"""
     pay_rate = 0.85
@@ -15,6 +16,14 @@ class Item:
 
         self.with_discount = 0
         self.total_price = 0
+
+    def __repr__(self) -> str:
+        """Привет разрабам и всем неравнадушным"""
+        return f"{self.__class__.__name__}('{self.name}', '{self.price}', {self.amount})"
+
+    def __str__(self) -> str:
+        """Чтоб могли читать обычные смертные"""
+        return f'{self.name}'
 
     @property
     def name(self) -> str:
@@ -54,16 +63,3 @@ class Item:
         """подсчет полной цены товара"""
         self.total_price = self.price * self.amount
         return self.total_price
-
-
-
-
-
-
-
-
-
-
-
-
-
