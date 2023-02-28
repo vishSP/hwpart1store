@@ -63,3 +63,30 @@ class Item:
         """подсчет полной цены товара"""
         self.total_price = self.price * self.amount
         return self.total_price
+
+
+class Phone(Item):
+
+    def __init__(self, name: str, price: int, amount: int, number_of_sim: int):
+        """ Инициализатор атрибутов класса Phone по средству наследования от Item"""
+        super().__init__(name, price, amount)
+        self.number_of_sim = number_of_sim
+
+    @property
+    def number_of_sim(self) -> int:
+        """ Геттер для колчиества сим-карт """
+        return self.__number_of_sim
+
+    @number_of_sim.setter
+    def number_of_sim(self, number_of_sim: int):
+        """ Сеттер для выеявлении ошибки при недопустимом значении кол-ва сим-карт"""
+        if number_of_sim <= 0:
+            raise ValueError('Количество физических SIM-карт должно быть целым числом больше нуля.')
+        else:
+            self.__number_of_sim = number_of_sim
+
+    def __add__(self, other):
+        """ Маг метод для сложение экземпляров разных классов """
+        if isinstance(other, Item):
+            return self.amount + other.amount
+
