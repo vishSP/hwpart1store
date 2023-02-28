@@ -1,17 +1,22 @@
 from main import Item
+from main import Phone
 import pytest
-
-"""фикстура"""
 
 
 @pytest.fixture
 def item():
+    """фикстура"""
     return Item(name='тест', price=20000, amount=5)
+
+
+@pytest.fixture
+def phone():
+    return Phone(name='iPhone 14', price=20000, amount=5, number_of_sim=3)
 
 
 def test_repr(item):
     """Проверяет маг метод repr """
-    assert item.__repr__() == "Item('тест',  20000,  5)"
+    assert item.__repr__() == "Item('тест', '20000', 5)"
 
 
 def test_str(item):
@@ -47,6 +52,46 @@ def test_instantiate_from_csv(item):
 
 
 def test_is_integer(item):
-    assert item.is_integer(5) == True
-    assert item.is_integer(5.0) == True
-    assert item.is_integer(5.5) == False
+    assert item.is_integer(5) is True
+    assert item.is_integer(5.0) is True
+    assert item.is_integer(5.5) is False
+
+
+def test_get_attributes(phone):
+    """Проверка получения атрибутов экземпляра класса Phone"""
+    assert phone.name == 'iPhone 14'
+    assert phone.price == 20000
+    assert phone.amount == 5
+    assert phone.pay_rate == 0.85
+    assert phone.number_of_sim == 3
+    assert phone.pay_rate == 0.85
+    assert len(Item.all) == 1
+
+
+def test_change_number_of_sim_correct_data(phone):
+    """Проверка изменения атрибута number_of_sim"""
+    phone.number_of_sim = 1
+
+    assert phone.number_of_sim == 1
+
+
+def test_change_number_of_sim_incorrect_data(phone):
+    """
+    Проверка вызова исключения при попытке изменить количество сим-карт
+    на число не равное 1 или 2
+    """
+    with pytest.raises(ValueError):
+        phone.number_of_sim = 3
+
+
+def test_add(item, phone):
+    """
+    Проверка сложения экземпляра класса Item с экземпляром класса Phone
+    """
+    assert phone + item == 10
+    assert phone + phone == 10
+
+
+def test_object_name_repr(phone):
+    """Проверка отображения информации об объекте класса Phone для разработчиков"""
+    assert repr(phone) == "Phone('iPhone 14', '20000', 5)"
