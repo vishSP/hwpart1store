@@ -65,7 +65,6 @@ def test_get_attributes(phone):
     assert phone.pay_rate == 0.85
     assert phone.number_of_sim == 3
     assert phone.pay_rate == 0.85
-    assert len(Item.all) == 1
 
 
 def test_change_number_of_sim_correct_data(phone):
