@@ -13,7 +13,7 @@ class Item:
         self.price = price
         self.amount = amount
         self.all.append(self)
-
+        super().__init__()
         self.with_discount = 0
         self.total_price = 0
 
@@ -90,3 +90,28 @@ class Phone(Item):
         if isinstance(other, Item):
             return self.amount + other.amount
 
+
+class MixinLog:
+
+    def __init__(self):
+        """ атрибут язык"""
+        self.__language = "EN"
+
+    @property
+    def language(self):
+        return self.__language
+
+    def change_lang(self) -> str:
+        """Изменяет язык"""
+        if self.language == "EN":
+            self.__language = 'RU'
+        elif self.language == "RU":
+            self.__language = 'EN'
+        return self.__language
+
+
+class KeyBoard(Item, MixinLog):
+
+    def __init__(self, name: str, price: int, amount: int):
+        """ Наследование атьрибутов от классов"""
+        super().__init__(name, price, amount)

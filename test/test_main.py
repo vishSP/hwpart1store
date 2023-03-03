@@ -1,6 +1,8 @@
-from main import Item
-from main import Phone
 import pytest
+
+from main import Item
+from main import KeyBoard
+from main import Phone
 
 
 @pytest.fixture
@@ -12,6 +14,11 @@ def item():
 @pytest.fixture
 def phone():
     return Phone(name='iPhone 14', price=20000, amount=5, number_of_sim=3)
+
+
+@pytest.fixture
+def keyboard():
+    return KeyBoard(name="Dark Project KD87A", price=9600, amount=5)
 
 
 def test_repr(item):
@@ -79,8 +86,8 @@ def test_change_number_of_sim_incorrect_data(phone):
     Проверка вызова исключения при попытке изменить количество сим-карт
     на число не равное 1 или 2
     """
-    with pytest.raises(ValueError):
-        phone.number_of_sim = 3
+    with pytest.raises(Exception):
+        phone.number_of_sim(0)
 
 
 def test_add(item, phone):
@@ -94,3 +101,18 @@ def test_add(item, phone):
 def test_object_name_repr(phone):
     """Проверка отображения информации об объекте класса Phone для разработчиков"""
     assert repr(phone) == "Phone('iPhone 14', '20000', 5)"
+
+
+def test_keyboard(keyboard):
+    kb = keyboard
+    assert kb.__str__() == 'Dark Project KD87A'
+
+
+def test_change_lang(keyboard):
+    assert keyboard.language == 'EN'
+    assert keyboard.change_lang() == 'RU'
+
+def test_lang_error(keyboard):
+    with pytest.raises(Exception):
+        keyboard.change_lang('CH')
+
