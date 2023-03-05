@@ -113,5 +113,6 @@ class MixinLog:
 class KeyBoard(Item, MixinLog):
 
     def __init__(self, name: str, price: int, amount: int):
-        """ Наследование атьрибутов от классов"""
+        """ Наследование атрибутов от классов"""
         super().__init__(name, price, amount)
+        MixinLog.__init__(self)
