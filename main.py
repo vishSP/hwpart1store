@@ -1,4 +1,5 @@
 import csv
+import os
 
 
 class Item:
@@ -43,10 +44,20 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls) -> None:
         """ Метод получает данные из файла и превращает в атрибуты"""
+
+        if not os.path.isfile("items.csv"):
+            raise FileNotFoundError("Отсутствует файл item.csv")
+
         with open('items.csv', 'r') as f:
             reader = csv.DictReader(f)
-            for line in reader:
-                items = Item(line['name'], line['price'], line['quantity'])
+            list_reader = list(reader)
+
+            if len(list_reader) == 5:
+                for line in reader:
+                    items = Item(line['name'], line['price'], line['quantity'])
+
+            elif len(list_reader) < 5 or len(list_reader) > 5:
+                raise InstantiateCSVError("Файл item.csv поврежден")
 
     @staticmethod
     def is_integer(nubmer: int) -> bool:
@@ -116,3 +127,17 @@ class KeyBoard(Item, MixinLog):
         """ Наследование атрибутов от классов"""
         super().__init__(name, price, amount)
         MixinLog.__init__(self)
+
+
+class InstantiateCSVError(Exception):
+    """модуль для вывода ошибок"""
+    __module__ = Exception.__module__
+
+    def __init__(self, massage):
+        self.massage = massage
+
+    def __str__(self):
+        return self.massage
+
+
+

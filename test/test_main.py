@@ -3,7 +3,7 @@ import pytest
 from main import Item
 from main import KeyBoard
 from main import Phone
-
+from main import InstantiateCSVError
 
 @pytest.fixture
 def item():
