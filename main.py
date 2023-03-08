@@ -3,7 +3,6 @@ import os
 
 
 class Item:
-    """размер скидки"""
     pay_rate = 0.85
     """Список для вывода экземпляров """
     all = []
@@ -59,21 +58,24 @@ class Item:
             elif len(list_reader) < 5 or len(list_reader) > 5:
                 raise InstantiateCSVError("Файл item.csv поврежден")
 
-    @staticmethod
-    def is_integer(nubmer: int) -> bool:
-        """проверяет является ли число целым"""
-        isInt = float(nubmer).is_integer()
-        return isInt
 
-    def apply_discount(self) -> int:
-        """применение скидки"""
-        self.price = self.price * self.pay_rate
-        return self.price
+@staticmethod
+def is_integer(nubmer: int) -> bool:
+    """проверяет является ли число целым"""
+    isInt = float(nubmer).is_integer()
+    return isInt
 
-    def calculate_total_price(self) -> int:
-        """подсчет полной цены товара"""
-        self.total_price = self.price * self.amount
-        return self.total_price
+
+def apply_discount(self) -> int:
+    """применение скидки"""
+    self.price = self.price * self.pay_rate
+    return self.price
+
+
+def calculate_total_price(self) -> int:
+    """подсчет полной цены товара"""
+    self.total_price = self.price * self.amount
+    return self.total_price
 
 
 class Phone(Item):
@@ -138,6 +140,3 @@ class InstantiateCSVError(Exception):
 
     def __str__(self):
         return self.massage
-
-
-
