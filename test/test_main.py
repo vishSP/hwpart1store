@@ -1,9 +1,10 @@
 import pytest
 
+from main import InstantiateCSVError
 from main import Item
 from main import KeyBoard
 from main import Phone
-from main import InstantiateCSVError
+
 
 @pytest.fixture
 def item():
@@ -112,7 +113,12 @@ def test_change_lang(keyboard):
     assert keyboard.language == 'EN'
     assert keyboard.change_lang() == 'RU'
 
+
 def test_lang_error(keyboard):
     with pytest.raises(Exception):
         keyboard.change_lang('CH')
 
+
+def test_hit_file(item):
+    with pytest.raises(InstantiateCSVError):
+        item.instantiate_from_csv()
